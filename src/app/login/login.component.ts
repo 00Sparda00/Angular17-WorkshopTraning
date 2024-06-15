@@ -1,5 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
+import { Meta } from '@angular/platform-browser';
 import { 
   ReactiveFormsModule, FormsModule,
   FormGroup,
@@ -18,11 +19,13 @@ templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+  private meta = inject(Meta)
   // FormGroup
   loginForm!: FormGroup;
   // สร้างตัวแปรไว้เช็คว่า submit form หรือยัง
   submitted = false
   hide = true
+  
   // ตัวแปลสำหรับผูกกับฟอร์ม
   userLogin = {
     "email": "",
@@ -38,6 +41,24 @@ export class LoginComponent {
 
   // ngOnInit
   ngOnInit() {
+    this.meta.addTag(
+      {
+        name: 'title',
+        content: 'หน้าหลัก | Stock Management'
+      },
+    )
+    this.meta.addTag({
+      name : 'description',
+      content: 'Stock Management is a web application that allows users to manage their stock inventory.'
+    },
+  )
+  this.meta.addTag(
+    {
+      name: 'keywords',
+      content: 'stock, management, inventory, web application, stock management, inventory management, stock inventory, stock management web application, inventory management web application, stock inventory web application, stock management inventory, stock management inventory web application, stock management inventory management'
+    },
+    )
+
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]

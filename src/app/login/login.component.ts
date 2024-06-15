@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import {
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import { 
   ReactiveFormsModule, FormsModule,
   FormGroup,
   FormBuilder,
@@ -9,8 +10,8 @@ import {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
-  templateUrl: './login.component.html',
+  imports: [ReactiveFormsModule, FormsModule, NgOptimizedImage],
+templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
@@ -18,11 +19,15 @@ export class LoginComponent {
   loginForm!: FormGroup;
   // สร้างตัวแปรไว้เช็คว่า submit form หรือยัง
   submitted = false
+  hide = true
   // ตัวแปลสำหรับผูกกับฟอร์ม
   userLogin = {
     "email": "",
     "password": ""
   }
+
+@ViewChild('emailInput') abc!: ElementRef
+
   // Constructor
   constructor(
     private formBuilder: FormBuilder
@@ -50,8 +55,11 @@ export class LoginComponent {
       }
     }
   }
+
   resetForm(){
     this.submitted = false
     this.loginForm.reset()
+    // ให้ Focus Input แรก
+    this.abc.nativeElement.focus()
   }
 }

@@ -7,6 +7,9 @@ import {
   Validators
 } from '@angular/forms';
 
+// SweetAlert2
+import Swal from 'sweetalert2'
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -49,9 +52,19 @@ export class LoginComponent {
       this.userLogin.email = this.loginForm.value.email
       this.userLogin.password = this.loginForm.value.password
       if (this.userLogin.email == "admin@email.com" && this.userLogin.password == "123456") {
-        alert("Login Success")
+        Swal.fire({
+          title: 'เข้าสู่ระบบสำเร็จ',
+          text: 'ยินดีต้อนรับเข้าสู่ระบบ Stock Management',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        })
       } else {
-        alert("Login Fail")
+        Swal.fire({
+          title: 'มีข้อผิดพลาด',
+          text: 'อีเมลหรือรหัสผ่านไม่ถูกต้อง',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
       }
     }
   }
